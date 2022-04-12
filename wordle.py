@@ -32,16 +32,17 @@ class Wordle:
 
     def make_guess(self):
         guess = input('Make a guess: ').upper()
+        guess_cpy = guess
         if guess not in words:
             print(guess + ' is not a valid 5-letter word.')
             return
-        elif guess == self.answer:
-            guess = Back.GREEN + guess
-            self.board[self.tries] = guess
-            print(chr(27) + "[2J")
-            self.output_board()
-            print('Correct, congratulations!')
-            exit(0)
+        # elif guess == self.answer:
+        #     guess = Back.GREEN + guess
+        #     self.board[self.tries] = guess
+        #     print(chr(27) + "[2J")
+        #     self.output_board()
+        #     print('Correct, congratulations!')
+        #     exit(0)
         already_used = []
         for guess_char, answer_char in zip(guess, self.answer):
             if guess_char == answer_char:
@@ -56,6 +57,13 @@ class Wordle:
                 already_used.append(guess_char)
                 guess = guess.replace(guess_char, Back.RESET + guess_char, 2)
                 self.alphabet.pop(guess_char, 'No value')
+        if guess_cpy == self.answer:
+            guess = Back.GREEN + guess
+            self.board[self.tries] = guess
+            print(chr(27) + "[2J")
+            self.output_board()
+            print('Correct, congratulations!')
+            exit(0)
         self.board[self.tries] = guess
         self.tries += 1
         
